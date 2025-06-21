@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  videoai-backend:
+    build: .
+    container_name: videoai-backend
+    ports:
+      - "8000:8000"
+    environment:
+      - HUGGINGFACE_API_KEY=${HUGGINGFACE_API_KEY}
+      - HUGGINGFACE_MODEL=${HUGGINGFACE_MODEL:-meta-llama/Llama-3.1-8B-Instruct}
+      - LOG_LEVEL=${LOG_LEVEL:-INFO}
+    volumes:
+      - ./storage:/app/storage
+      - ./logs:/app/logs
+    restart: unless-stopped
+
+  videoai-frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: videoai-frontend
+    ports:
+      - "5173:5173"
+    environment:
+      - REACT_APP_API_URL=http://localhost:8000
+    depends_on:
+      - videoai-backend
+    restart: unless-stopped
+
