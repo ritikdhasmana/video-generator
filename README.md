@@ -121,6 +121,5 @@ npm run dev
 
 For Docker deployment, use:
 
-cp env.template .env
-# Edit .env with your API keys
+cp env.template .env # edit .env with your API keys
 docker-compose up -d

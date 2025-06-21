@@ -189,6 +189,17 @@ class WebScraper:
             # Get image dimensions
             width = img.get('width', 0)
             height = img.get('height', 0)
+
+            try:
+                width = int(width)
+            except (ValueError, TypeError):
+                width = 0
+
+            try:
+                height = int(height)
+            except (ValueError, TypeError):
+                height = 0
+
             
             # Try to get dimensions from style attribute
             style = img.get('style', '')
